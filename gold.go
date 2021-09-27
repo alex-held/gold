@@ -13,6 +13,17 @@ type Gold struct {
 	*goldie.Goldie
 }
 
+func New(t *testing.T, opts ...goldie.Option) *Gold {
+	defaults := []goldie.Option{
+		goldie.WithDiffEngine(goldie.ColoredDiff),
+		goldie.WithTestNameForDir(true),
+	}
+
+	return &Gold{
+		Goldie: goldie.New(t, append(defaults, opts...)...),
+	}
+}
+
 // AssertYaml compares the actual yaml data received with expected data in the
 // golden files. If the update flag is set, it will also update the golden
 // file.
